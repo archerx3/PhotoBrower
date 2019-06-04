@@ -77,8 +77,8 @@ class AWTableViewController: UITableViewController, AWPhotosViewControllerDelega
                 image: UIImage(named: "timg.jpeg"),
                 identifier: "Test Image2")
         ,
-        //
-        AWPhoto(attributedTitle: NSAttributedString(string: "The Flash Poster",
+        // GIF
+        AWPhoto(attributedTitle: NSAttributedString(string: "Oh my god",
                                                     attributes:[
                                                         .font: UIFont.italicSystemFont(ofSize: 24),
                                                         .paragraphStyle: {
@@ -86,23 +86,22 @@ class AWTableViewController: UITableViewController, AWPhotosViewControllerDelega
                                                             style.alignment = .right
                                                             return style
                                                         }()
-                    ]), attributedDescription: NSAttributedString(string: "Season 3",
+                    ]), attributedDescription: NSAttributedString(string: "What fuck",
                                                                   attributes:[
                                                                     .paragraphStyle: {
                                                                         let style = NSMutableParagraphStyle()
                                                                         style.alignment = .right
                                                                         return style
                                                                     }()
-                        ]), attributedCredit: NSAttributedString(string: "Vignette",
+                        ]), attributedCredit: NSAttributedString(string: "女司机",
                                                                  attributes:[
                                                                     .paragraphStyle: {
                                                                         let style = NSMutableParagraphStyle()
                                                                         style.alignment = .right
                                                                         return style
                                                                     }()
-                            ]), url: URL(string: "https://goo.gl/T4oZudY"),
+                            ]), url: URL(string: "http://s1.dwstatic.com/group1/M00/5A/7D/554428c39e9819dc719c30a11dbc7867.gif"),
                                 identifier: "flash"),
-        // GIF
         AWPhoto(attributedTitle: NSAttributedString(string: "The Flash has a cute smile"),
                 attributedDescription: nil,
                 attributedCredit: NSAttributedString(string: "Giphy"),
