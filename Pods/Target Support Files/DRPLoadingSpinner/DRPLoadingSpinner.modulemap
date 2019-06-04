@@ -1,0 +1,6 @@
+framework module DRPLoadingSpinner {
+  umbrella header "DRPLoadingSpinner-umbrella.h"
+
+  export *
+  module * { export * }
+}

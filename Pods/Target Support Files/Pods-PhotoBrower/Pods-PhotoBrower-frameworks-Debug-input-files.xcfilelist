@@ -1,0 +1,4 @@
+${PODS_ROOT}/Target Support Files/Pods-PhotoBrower/Pods-PhotoBrower-frameworks.sh
+${BUILT_PRODUCTS_DIR}/DRPLoadingSpinner/DRPLoadingSpinner.framework
+${BUILT_PRODUCTS_DIR}/FLAnimatedImage/FLAnimatedImage.framework
+${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework
