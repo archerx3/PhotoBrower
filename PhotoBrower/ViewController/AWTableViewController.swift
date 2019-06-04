@@ -271,6 +271,13 @@ class AWTableViewController: UITableViewController, AWPhotosViewControllerDelega
         
     }
     
+    func photosViewController(_ photosViewController: AWPhotosViewController,
+                              didExecuteActionType: AWStackableViewContainer.ActionType,
+                              on stackableViewContainer: AWStackableViewContainer,
+                              for photo: AWPhotoProtocol) {
+        
+    }
+    
     func photosViewControllerWillDismiss(_ photosViewController: AWPhotosViewController) {
         
     }

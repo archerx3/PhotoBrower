@@ -99,13 +99,13 @@ class AWStackableViewToolbarContainer: AWStackableViewContainer {
         bottomToolbar.addButtonActionBlock = { [weak self] (sender) in
             guard let `self` = self else { return }
             
-            self.delegate?.stackableViewContainer(self, didExecuteAction: .add)
+            self.delegate?.stackableViewContainer(self, didExecuteActionType: .add)
         }
         
         bottomToolbar.trashButtonActionBlock = { [weak self] (sender) in
             guard let `self` = self else { return }
             
-            self.delegate?.stackableViewContainer(self, didExecuteAction: .delete)
+            self.delegate?.stackableViewContainer(self, didExecuteActionType: .delete)
         }
         
         self.insertSubview(bottomToolbar, at: 0) // insert custom

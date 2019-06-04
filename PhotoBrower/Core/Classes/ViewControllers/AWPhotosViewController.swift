@@ -343,6 +343,21 @@ open class AWPhotosViewController: UIViewController,
         }
         
         self.overlayView = overlay
+        self.overlayView.bottomStackActionBlock = { [weak self] (anchorPoint, actionType) in
+            
+            guard let `self` = self else { return }
+            
+            guard let photo = self.dataSource.photo(at: self.currentPhotoIndex) else { return }
+            
+            if anchorPoint == .bottom {
+                self.delegate?.photosViewController(self,
+                                                    didExecuteActionType: actionType,
+                                                    on: self.overlayView.bottomStackContainer,
+                                                    for: photo)
+            } else if anchorPoint == .top {
+                
+            }
+        }
         
         self.networkIntegration = networkIntegration
         self.networkIntegration.delegate = self
@@ -1251,6 +1266,18 @@ public protocol AWPhotosViewControllerDelegate: AnyObject, NSObjectProtocol {
     /// - Note: This is only called for the default action.
     func photosViewController(_ photosViewController: AWPhotosViewController,
                               actionCompletedWith activityType: UIActivity.ActivityType,
+                              for photo: AWPhotoProtocol)
+    
+    /// Called when an action button action on stackableViewContainer is completed.
+    ///
+    /// - Parameters:
+    ///   - photosViewController: The `AWPhotosViewController` that handled the action.
+    ///   - didExecuteActionType: Action Type
+    ///   - stackableViewContainer: Action Button super view
+    ///   - photo: The related `AWPhoto`.
+    func photosViewController(_ photosViewController: AWPhotosViewController,
+                              didExecuteActionType: AWStackableViewContainer.ActionType,
+                              on stackableViewContainer: AWStackableViewContainer,
                               for photo: AWPhotoProtocol)
     
     /// Called just before the `AWPhotosViewController` begins its dismissal

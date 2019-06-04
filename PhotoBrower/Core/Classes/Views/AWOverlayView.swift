@@ -9,6 +9,8 @@
 import Foundation
 import UIKit
 
+public typealias AWStackableViewActionDidExecuteBlock = (AWStackableViewContainer.AnchorPoint, AWStackableViewContainer.ActionType) -> Void
+
 open class AWOverlayView: UIView, AWStackableViewContainerDelegate {
     
     /// The toolbar used to set the `titleView`, `leftBarButtonItems`, `rightBarButtonItems`
@@ -149,6 +151,8 @@ open class AWOverlayView: UIView, AWStackableViewContainerDelegate {
     /// Container to embed all content anchored at the bottom of the `overlayView`.
     /// Add custom subviews to the bottom container in the order that you wish to stack them. These must be self-sizing views.
     public var bottomStackContainer: AWStackableViewContainer!
+    
+    public var bottomStackActionBlock: AWStackableViewActionDidExecuteBlock?
     
     /// A flag that is set at the beginning and end of `OverlayView.setShowInterface(_:alongside:completion:)`
     fileprivate var isShowInterfaceAnimating = false
@@ -368,8 +372,10 @@ open class AWOverlayView: UIView, AWStackableViewContainerDelegate {
         }
     }
     
-    func stackableViewContainer(_ stackableViewContainer: AWStackableViewContainer, didExecuteAction: AWStackableViewContainer.ActionType) {
-        
+    func stackableViewContainer(_ stackableViewContainer: AWStackableViewContainer, didExecuteActionType: AWStackableViewContainer.ActionType) {
+        if stackableViewContainer.anchorPoint == .bottom && self.bottomStackActionBlock != nil {
+            self.bottomStackActionBlock!(.bottom, didExecuteActionType)
+        }
     }
     
     // MARK: - UIToolbar convenience

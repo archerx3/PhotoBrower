@@ -14,11 +14,11 @@ public typealias AWStackableViewContainerUpdateBlock = ((AWStackableViewContaine
 
 public class AWStackableViewContainer: UIView {
     
-    enum AnchorPoint: Int {
+    public enum AnchorPoint: Int {
         case top, bottom
     }
     
-    enum ActionType: Int {
+    public enum ActionType: Int {
         case add = 1, modify = 0, delete = -1
     }
     
@@ -129,5 +129,5 @@ protocol AWStackableViewContainerDelegate: class {
     func stackableViewContainer(_ stackableViewContainer: AWStackableViewContainer, didAddSubview: UIView)
     func stackableViewContainer(_ stackableViewContainer: AWStackableViewContainer, willRemoveSubview: UIView)
     
-    func stackableViewContainer(_ stackableViewContainer: AWStackableViewContainer, didExecuteAction:AWStackableViewContainer.ActionType)
+    func stackableViewContainer(_ stackableViewContainer: AWStackableViewContainer, didExecuteActionType:AWStackableViewContainer.ActionType)
 }
