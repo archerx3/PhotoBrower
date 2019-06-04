@@ -138,10 +138,11 @@ class AWTableViewController: UITableViewController, AWPhotosViewControllerDelega
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = "Photos"
+        
         self.tableView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: ReuseIdentifier)
-        self.tableView.estimatedRowHeight = 350
-        self.tableView.rowHeight = 350
+        self.tableView.estimatedRowHeight = 0
     }
     
     override func viewWillLayoutSubviews() {
@@ -161,7 +162,7 @@ class AWTableViewController: UITableViewController, AWPhotosViewControllerDelega
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        var height: CGFloat = 300.0
+        var height: CGFloat = 350.0
         
         if let _ = self.photos[indexPath.row].identifier {
             height = 44.0
@@ -242,7 +243,11 @@ class AWTableViewController: UITableViewController, AWPhotosViewControllerDelega
         
         photosViewController.delegate = self
         
-        self.present(photosViewController, animated: true)
+        if let navi = self.navigationController {
+            navi.present(photosViewController, animated: true, completion: nil)
+        } else {
+            self.present(photosViewController, animated: true)
+        }
         self.photosViewController = photosViewController
     }
     
