@@ -349,6 +349,26 @@ open class AWPhotosViewController: UIViewController,
             
             guard let photo = self.dataSource.photo(at: self.currentPhotoIndex) else { return }
             
+            var anchorPointString = "bottom"
+            switch anchorPoint {
+            case .top:
+                anchorPointString = "top"
+            default:
+                break
+            }
+            
+            var actionTypeString = "add"
+            switch actionType {
+            case .modify:
+                actionTypeString = "modify"
+            case .delete:
+                actionTypeString = "delete"
+            default:
+                break
+            }
+            
+            print("Did execute \(actionTypeString) action on \(anchorPointString) stackable view!")
+            
             if anchorPoint == .bottom {
                 self.delegate?.photosViewController(self,
                                                     didExecuteActionType: actionType,

@@ -19,6 +19,7 @@ class AWTableViewController: UITableViewController, AWPhotosViewControllerDelega
     weak var photosViewController: AWPhotosViewController?
     
     let photos = [
+        // URL Images
         AWPhoto(attributedTitle: NSAttributedString(
             string: "IMG-20161012-WA0000.jpg"),
                 attributedDescription: NSAttributedString(string: "QmbZEXnNgyrsNUVSStAYB8DMZKexbmS8JbaRG7FyKTrpk1"),
@@ -54,51 +55,64 @@ class AWTableViewController: UITableViewController, AWPhotosViewControllerDelega
                 attributedDescription: NSAttributedString(string: "QmcCpG46FhrHro34CURXTeuy4c85RNd2RPyAj1ofFopRE6"),
                 url: URL(string:"https://beta.axel.network/ipfs/QmcCpG46FhrHro34CURXTeuy4c85RNd2RPyAj1ofFopRE6"),
                 identifier: "QmcCpG46FhrHro34CURXTeuy4c85RNd2RPyAj1ofFopRE6")
-//        ,
-//        AWPhoto(attributedTitle: NSAttributedString(
-//            string: "Niagara Falls"),
-//                image: UIImage(named: "niagara-falls"
-//            )
-//        ),
-//        AWPhoto(attributedTitle: NSAttributedString(string: "The Flash Poster",
-//                                                    attributes:[
-//                                                        .font: UIFont.italicSystemFont(ofSize: 24),
-//                                                        .paragraphStyle: {
-//                                                            let style = NSMutableParagraphStyle()
-//                                                            style.alignment = .right
-//                                                            return style
-//                                                        }()
-//                    ]), attributedDescription: NSAttributedString(string: "Season 3",
-//                                                                  attributes:[
-//                                                                    .paragraphStyle: {
-//                                                                        let style = NSMutableParagraphStyle()
-//                                                                        style.alignment = .right
-//                                                                        return style
-//                                                                    }()
-//                        ]), attributedCredit: NSAttributedString(string: "Vignette",
-//                                                                 attributes:[
-//                                                                    .paragraphStyle: {
-//                                                                        let style = NSMutableParagraphStyle()
-//                                                                        style.alignment = .right
-//                                                                        return style
-//                                                                    }()
-//                            ]), url: URL(string: "https://goo.gl/T4oZudY")),
-//        AWPhoto(attributedTitle: NSAttributedString(string: "Tall Building"),
-//                attributedDescription: NSAttributedString(string: "... And subsequently tall image"),
-//                attributedCredit: NSAttributedString(string: "Wikipedia"),
-//                image: UIImage(named: "burj-khalifa")),
-//        AWPhoto(attributedTitle: NSAttributedString(string: "The Flash: Rebirth"),
-//                attributedDescription: NSAttributedString(string: "Comic Book"),
-//                attributedCredit: NSAttributedString(string: "DC Comics"),
-//                url: URL(string: "https://goo.gl/9wgyAo")),
-//        AWPhoto(attributedTitle: NSAttributedString(string: "The Flash has a cute smile"),
-//                attributedDescription: nil,
-//                attributedCredit: NSAttributedString(string: "Giphy"),
-//                url: URL(string: "https://media.giphy.com/media/IOEcl8A8iLIUo/giphy.gif")),
-//        AWPhoto(attributedTitle: NSAttributedString(string: "The Flash slinging a rocket"),
-//                attributedDescription: nil,
-//                attributedCredit: NSAttributedString(string: "Giphy"),
-//                url: URL(string: "https://media.giphy.com/media/lXiRDbPcRYfUgxOak/giphy.gif"))
+        ,
+        // Local Images
+        AWPhoto(attributedTitle: NSAttributedString(string: "Good Night"),
+                image: UIImage(named: "Babe.jpg"),
+                identifier: "Baby, good night")
+        ,
+        AWPhoto(attributedTitle: NSAttributedString(string: "Stoamigo Web"),
+                image: UIImage(named: "border"),
+                identifier: "Stoamigo Web")
+        ,
+        AWPhoto(attributedTitle: NSAttributedString(string: "Stoamigo iOS"),
+                image: UIImage(named: "stoamigo"),
+                identifier: "Stoamigo iOS")
+        ,
+        AWPhoto(attributedTitle: NSAttributedString(string: "test image"),
+                image: UIImage(named: "testimage.JPG"),
+                identifier: "Test Image1")
+        ,
+        AWPhoto(attributedTitle: NSAttributedString(string: "Test Image2"),
+                image: UIImage(named: "timg.jpeg"),
+                identifier: "Test Image2")
+        ,
+        //
+        AWPhoto(attributedTitle: NSAttributedString(string: "The Flash Poster",
+                                                    attributes:[
+                                                        .font: UIFont.italicSystemFont(ofSize: 24),
+                                                        .paragraphStyle: {
+                                                            let style = NSMutableParagraphStyle()
+                                                            style.alignment = .right
+                                                            return style
+                                                        }()
+                    ]), attributedDescription: NSAttributedString(string: "Season 3",
+                                                                  attributes:[
+                                                                    .paragraphStyle: {
+                                                                        let style = NSMutableParagraphStyle()
+                                                                        style.alignment = .right
+                                                                        return style
+                                                                    }()
+                        ]), attributedCredit: NSAttributedString(string: "Vignette",
+                                                                 attributes:[
+                                                                    .paragraphStyle: {
+                                                                        let style = NSMutableParagraphStyle()
+                                                                        style.alignment = .right
+                                                                        return style
+                                                                    }()
+                            ]), url: URL(string: "https://goo.gl/T4oZudY"),
+                                identifier: "flash"),
+        // GIF
+        AWPhoto(attributedTitle: NSAttributedString(string: "The Flash has a cute smile"),
+                attributedDescription: nil,
+                attributedCredit: NSAttributedString(string: "Giphy"),
+                url: URL(string: "https://media.giphy.com/media/IOEcl8A8iLIUo/giphy.gif"),
+                identifier: "The flash has a cute smile"),
+        AWPhoto(attributedTitle: NSAttributedString(string: "The Flash slinging a rocket"),
+                attributedDescription: nil,
+                attributedCredit: NSAttributedString(string: "Giphy"),
+                url: URL(string: "https://media.giphy.com/media/lXiRDbPcRYfUgxOak/giphy.gif"),
+                identifier: "The Flash slinging a rocket")
     ]
     
     override var prefersHomeIndicatorAutoHidden: Bool {
@@ -205,7 +219,7 @@ class AWTableViewController: UITableViewController, AWPhotosViewControllerDelega
         let pagingConfig = AWPagingConfig(loadingViewClass: AWCustomLoadingView.self)
         
         
-        let overlayView = AWOverlayView.init(bottomStackContainer: AWStackableViewToolbarContainer.init(views: [], anchoredAt: .bottom))
+        let overlayView = AWOverlayView.init()//(bottomStackContainer: AWStackableViewToolbarContainer.init(views: [], anchoredAt: .bottom))
         
         if let bottomStackContainer = overlayView.bottomStackContainer as? AWStackableViewToolbarContainer {
             bottomStackContainer.stackableContainerSetupBlock = { (container) in
