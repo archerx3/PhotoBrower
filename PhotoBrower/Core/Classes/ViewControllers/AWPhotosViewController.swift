@@ -728,16 +728,22 @@ public class AWPhotosViewController: UIViewController,
                 photo.aw_loadingState = .loading
                 if let delegate = self.delegate {
                     var maybeUpdatePhoto = photo.copyPhoto()
-                    if delegate.photosViewController(self, canLoad: &maybeUpdatePhoto) {
-                        if photo === maybeUpdatePhoto {
-                            self.networkIntegration.loadPhoto(photo)
-                        } else {
+                    var didUpdate = false
+                    
+                    let canLoad = delegate.photosViewController(self,
+                                                                canLoad: &maybeUpdatePhoto,
+                                                                didUpdate: &didUpdate)
+                    
+                    if canLoad {
+                        if didUpdate {
                             self.dataSource.updatePhoto(maybeUpdatePhoto, at: index)
                             if self.currentPhotoIndex == index { self.overlayView.updateCaptionView(photo: maybeUpdatePhoto) }
                             self.networkIntegration.loadPhoto(maybeUpdatePhoto)
+                        } else {
+                            self.networkIntegration.loadPhoto(photo)
                         }
                     } else {
-                        if photo !== maybeUpdatePhoto {
+                        if didUpdate {
                             self.dataSource.updatePhoto(maybeUpdatePhoto, at: index)
                             if self.currentPhotoIndex == index { self.overlayView.updateCaptionView(photo: maybeUpdatePhoto) }
                         }
@@ -748,10 +754,16 @@ public class AWPhotosViewController: UIViewController,
                     self.networkIntegration.loadPhoto(photo)
                 }
             } else if photo.aw_loadingState == .loading {
-                var maybeUpdatePhoto = photo.copyPhoto()
                 if let delegate = self.delegate {
-                    if delegate.photosViewController(self, canLoad: &maybeUpdatePhoto) {
-                        if photo !== maybeUpdatePhoto {
+                    var maybeUpdatePhoto = photo.copyPhoto()
+                    var didUpdate = false
+                    
+                    let canLoad = delegate.photosViewController(self,
+                                                                canLoad: &maybeUpdatePhoto,
+                                                                didUpdate: &didUpdate)
+                    
+                    if canLoad {
+                        if didUpdate {
                             self.networkIntegration.cancelLoad(for: photo)
                             
                             self.dataSource.updatePhoto(maybeUpdatePhoto, at: index)
@@ -759,7 +771,7 @@ public class AWPhotosViewController: UIViewController,
                             self.networkIntegration.loadPhoto(maybeUpdatePhoto)
                         }
                     } else {
-                        if photo !== maybeUpdatePhoto {
+                        if didUpdate {
                             self.dataSource.updatePhoto(maybeUpdatePhoto, at: index)
                             if self.currentPhotoIndex == index { self.overlayView.updateCaptionView(photo: maybeUpdatePhoto) }
                         }
@@ -1311,7 +1323,8 @@ public protocol AWPhotosViewControllerDelegate: AnyObject, NSObjectProtocol {
     ///   - photosViewController: The `AWPhotosViewController` that is navigating.
     ///   - photo: The `AWPhoto` that will try to load.
     func photosViewController(_ photosViewController: AWPhotosViewController,
-                              canLoad photo: inout AWPhotoProtocol) -> Bool
+                              canLoad photo: inout AWPhotoProtocol,
+                              didUpdate: inout Bool) -> Bool
     
     /// Called when the `AWPhotosViewController` is configuring its `OverlayView` for a new photo. This should be used to update the
     /// the overlay's title or any other overlay-specific properties.

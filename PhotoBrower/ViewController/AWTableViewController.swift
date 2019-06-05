@@ -164,7 +164,7 @@ class AWTableViewController: UITableViewController, AWPhotosViewControllerDelega
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         var height: CGFloat = 350.0
         
-        if let _ = self.photos[indexPath.row].identifier {
+        if self.photos[indexPath.row].identifier.count > 0 {
             height = 44.0
         }
         
@@ -174,7 +174,8 @@ class AWTableViewController: UITableViewController, AWPhotosViewControllerDelega
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifier) else { return UITableViewCell() }
         
-        if let id = self.photos[indexPath.row].identifier {
+        let id = self.photos[indexPath.row].identifier
+        if id.count > 0 {
             cell.textLabel!.text = id
         } else if cell.contentView.viewWithTag(666) == nil {
             // sample project worst practices top kek
@@ -258,10 +259,11 @@ class AWTableViewController: UITableViewController, AWPhotosViewControllerDelega
     }
     
     func photosViewController(_ photosViewController: AWPhotosViewController,
-                              canLoad photo: inout AWPhotoProtocol) -> Bool {
+                              canLoad photo: inout AWPhotoProtocol,
+                              didUpdate: inout Bool) -> Bool {
         var canLoad = true
         
-        if let id = photo.identifier, id == "Baby, good night" {
+        if photo.identifier == "Baby, good night" {
             photo = AWPhoto(attributedTitle: NSAttributedString(string: "Good Night - New Identifier"),
                             image: UIImage(named: "Babe"),
                             identifier: "Baby, good night, New identifier")
