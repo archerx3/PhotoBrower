@@ -228,8 +228,15 @@ open class AWLoadingView: UIView, AWLoadingViewProtocol {
             self.errorImageView = nil
         }
         
+        var errMsg = self.errorText
+        
+        if let err = error as? AWError, let msg = err.errorMessage {
+            errMsg = msg
+        }
+        
         self.errorLabel = UILabel()
-        self.errorLabel?.attributedText = NSAttributedString(string: self.errorText, attributes: self.errorAttributes)
+        self.errorLabel?.attributedText = NSAttributedString(string: errMsg,
+                                                             attributes: self.errorAttributes)
         self.errorLabel?.textAlignment = .center
         self.errorLabel?.numberOfLines = 3
         self.errorLabel?.textColor = .white

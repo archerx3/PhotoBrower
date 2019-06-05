@@ -29,4 +29,7 @@
     
     /// The Identifier of the AWPhoto
     var identifier: String? { get }
+    
+    ///
+    func copyPhoto() -> AWPhotoProtocol
 }

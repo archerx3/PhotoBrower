@@ -34,5 +34,4 @@ class AWCustomLoadingView: AWLoadingView {
             _indicatorView.stopAnimating()
         }
     }
-    
 }

@@ -48,4 +48,16 @@ open class AWPhoto: NSObject, AWPhotoProtocol {
     public var url: URL?
     
     public var identifier: String?
+    
+    public func copyPhoto() -> AWPhotoProtocol {
+        let copyPhoto = AWPhoto(attributedTitle: self.attributedTitle,
+                                attributedDescription: self.attributedDescription,
+                                attributedCredit: self.attributedCredit,
+                                imageData: self.imageData,
+                                image: self.image,
+                                url: self.url,
+                                identifier: self.identifier)
+        
+        return copyPhoto
+    }
 }

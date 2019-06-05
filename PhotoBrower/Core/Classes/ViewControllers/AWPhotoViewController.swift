@@ -181,7 +181,6 @@ public class AWPhotoViewController: UIViewController, AWPageableViewControllerPr
             self.view.setNeedsLayout()
         }
     }
-    
 }
 
 public protocol AWPhotoViewControllerDelegate: AnyObject, NSObjectProtocol {

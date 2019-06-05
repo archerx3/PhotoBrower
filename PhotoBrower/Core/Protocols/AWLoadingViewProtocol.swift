@@ -6,6 +6,19 @@
 //  Copyright © 2019 CA. All rights reserved.
 //
 
+enum AWError: Error {
+    case errorDescription(code: String, errorMessage: String)
+}
+
+extension AWError: LocalizedError {
+    public var errorMessage: String? {
+        switch self {
+        case .errorDescription(_, let errorMessage):
+            return errorMessage
+        }
+    }
+}
+
 public protocol AWLoadingViewProtocol: NSObjectProtocol {
     
     /// Called by the AXPhotoViewController when progress of the image download should be shown to the user.

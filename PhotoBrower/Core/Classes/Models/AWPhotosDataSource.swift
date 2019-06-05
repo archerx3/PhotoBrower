@@ -64,4 +64,9 @@ open class AWPhotosDataSource: NSObject {
         return nil
     }
     
+    public func updatePhoto(_ newPhoto: AWPhotoProtocol,at index: Int) {
+        if index < self.photos.count {
+            self.photos[index] = newPhoto
+        }
+    }
 }

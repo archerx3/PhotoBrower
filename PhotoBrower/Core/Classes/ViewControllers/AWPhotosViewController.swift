@@ -149,7 +149,7 @@ public class AWPhotosViewController: UIViewController,
     }
     
     public init(dataSource: AWPhotosDataSource?,
-                      pagingConfig: AWPagingConfig?) {
+                pagingConfig: AWPagingConfig?) {
         
         super.init(nibName: nil, bundle: nil)
         self.commonInit(dataSource: dataSource,
@@ -157,7 +157,7 @@ public class AWPhotosViewController: UIViewController,
     }
     
     public init(pagingConfig: AWPagingConfig?,
-                      transitionInfo: AWTransitionInfo?) {
+                transitionInfo: AWTransitionInfo?) {
         
         super.init(nibName: nil, bundle: nil)
         self.commonInit(pagingConfig: pagingConfig,
@@ -165,8 +165,8 @@ public class AWPhotosViewController: UIViewController,
     }
     
     public init(dataSource: AWPhotosDataSource?,
-                      pagingConfig: AWPagingConfig?,
-                      transitionInfo: AWTransitionInfo?) {
+                pagingConfig: AWPagingConfig?,
+                transitionInfo: AWTransitionInfo?) {
         
         super.init(nibName: nil, bundle: nil)
         self.commonInit(dataSource: dataSource,
@@ -177,13 +177,15 @@ public class AWPhotosViewController: UIViewController,
     public init(dataSource: AWPhotosDataSource?,
                 pagingConfig: AWPagingConfig?,
                 transitionInfo: AWTransitionInfo?,
-                overlay: AWOverlayView? = AWOverlayView()) {
+                overlay: AWOverlayView? = AWOverlayView(),
+                delegate: AWPhotosViewControllerDelegate? = nil) {
         
         super.init(nibName: nil, bundle: nil)
         self.commonInit(dataSource: dataSource,
                         pagingConfig: pagingConfig,
                         transitionInfo: transitionInfo,
-                        overlay:overlay)
+                        overlay:overlay,
+                        delegate: delegate)
     }
     
     public init(networkIntegration: AWNetworkIntegrationProtocol) {
@@ -192,7 +194,7 @@ public class AWPhotosViewController: UIViewController,
     }
     
     public init(dataSource: AWPhotosDataSource?,
-                      networkIntegration: AWNetworkIntegrationProtocol) {
+                networkIntegration: AWNetworkIntegrationProtocol) {
         
         super.init(nibName: nil, bundle: nil)
         self.commonInit(dataSource: dataSource,
@@ -200,8 +202,8 @@ public class AWPhotosViewController: UIViewController,
     }
     
     public init(dataSource: AWPhotosDataSource?,
-                      pagingConfig: AWPagingConfig?,
-                      networkIntegration: AWNetworkIntegrationProtocol) {
+                pagingConfig: AWPagingConfig?,
+                networkIntegration: AWNetworkIntegrationProtocol) {
         
         super.init(nibName: nil, bundle: nil)
         self.commonInit(dataSource: dataSource,
@@ -210,8 +212,8 @@ public class AWPhotosViewController: UIViewController,
     }
     
     public init(pagingConfig: AWPagingConfig?,
-                      transitionInfo: AWTransitionInfo?,
-                      networkIntegration: AWNetworkIntegrationProtocol) {
+                transitionInfo: AWTransitionInfo?,
+                networkIntegration: AWNetworkIntegrationProtocol) {
         
         super.init(nibName: nil, bundle: nil)
         self.commonInit(pagingConfig: pagingConfig,
@@ -222,20 +224,23 @@ public class AWPhotosViewController: UIViewController,
     public init(dataSource: AWPhotosDataSource?,
                       pagingConfig: AWPagingConfig?,
                       transitionInfo: AWTransitionInfo?,
-                      networkIntegration: AWNetworkIntegrationProtocol) {
+                      networkIntegration: AWNetworkIntegrationProtocol,
+                      delegate: AWPhotosViewControllerDelegate? = nil) {
         
         super.init(nibName: nil, bundle: nil)
         self.commonInit(dataSource: dataSource,
                         pagingConfig: pagingConfig,
                         transitionInfo: transitionInfo,
-                        networkIntegration: networkIntegration)
+                        networkIntegration: networkIntegration,
+                        delegate: delegate)
     }
     
     public init(dataSource: AWPhotosDataSource?,
                 pagingConfig: AWPagingConfig?,
                 transitionInfo: AWTransitionInfo?,
                 networkIntegration: AWNetworkIntegrationProtocol,
-                overlay: AWOverlayView? = AWOverlayView()) {
+                overlay: AWOverlayView? = AWOverlayView(),
+                delegate: AWPhotosViewControllerDelegate? = nil) {
         
         super.init(nibName: nil, bundle: nil)
         
@@ -243,30 +248,16 @@ public class AWPhotosViewController: UIViewController,
                         pagingConfig: pagingConfig,
                         transitionInfo: transitionInfo,
                         networkIntegration: networkIntegration,
-                        overlay: overlay)
-    }
-    
-    public init(from previewingPhotosViewController: AWPreviewingPhotosViewController) {
-        super.init(nibName: nil, bundle: nil)
-        self.commonInit(dataSource: previewingPhotosViewController.dataSource,
-                        networkIntegration: previewingPhotosViewController.networkIntegration)
-        
-        if #available(iOS 9.0, *) {
-            self.loadViewIfNeeded()
-        } else {
-            let _ = self.view
-        }
-        
-        self.currentPhotoViewController?.zoomingImageView.imageView.aw_syncFrames(with: previewingPhotosViewController.imageView)
+                        overlay: overlay,
+                        delegate: delegate)
     }
     
     public init(from previewingPhotosViewController: AWPreviewingPhotosViewController,
-                pagingConfig: AWPagingConfig?) {
-        
+                delegate: AWPhotosViewControllerDelegate? = nil) {
         super.init(nibName: nil, bundle: nil)
         self.commonInit(dataSource: previewingPhotosViewController.dataSource,
-                        pagingConfig: pagingConfig,
-                        networkIntegration: previewingPhotosViewController.networkIntegration)
+                        networkIntegration: previewingPhotosViewController.networkIntegration,
+                        delegate: delegate)
         
         if #available(iOS 9.0, *) {
             self.loadViewIfNeeded()
@@ -279,13 +270,34 @@ public class AWPhotosViewController: UIViewController,
     
     public init(from previewingPhotosViewController: AWPreviewingPhotosViewController,
                 pagingConfig: AWPagingConfig?,
-                transitionInfo: AWTransitionInfo?) {
+                delegate: AWPhotosViewControllerDelegate? = nil) {
+        
+        super.init(nibName: nil, bundle: nil)
+        self.commonInit(dataSource: previewingPhotosViewController.dataSource,
+                        pagingConfig: pagingConfig,
+                        networkIntegration: previewingPhotosViewController.networkIntegration,
+                        delegate: delegate)
+        
+        if #available(iOS 9.0, *) {
+            self.loadViewIfNeeded()
+        } else {
+            let _ = self.view
+        }
+        
+        self.currentPhotoViewController?.zoomingImageView.imageView.aw_syncFrames(with: previewingPhotosViewController.imageView)
+    }
+    
+    public init(from previewingPhotosViewController: AWPreviewingPhotosViewController,
+                pagingConfig: AWPagingConfig?,
+                transitionInfo: AWTransitionInfo?,
+                delegate: AWPhotosViewControllerDelegate? = nil) {
         
         super.init(nibName: nil, bundle: nil)
         self.commonInit(dataSource: previewingPhotosViewController.dataSource,
                         pagingConfig: pagingConfig,
                         transitionInfo: transitionInfo,
-                        networkIntegration: previewingPhotosViewController.networkIntegration)
+                        networkIntegration: previewingPhotosViewController.networkIntegration,
+                        delegate: delegate)
         
         if #available(iOS 9.0, *) {
             self.loadViewIfNeeded()
@@ -304,20 +316,23 @@ public class AWPhotosViewController: UIViewController,
     @nonobjc init(dataSource: AWPhotosDataSource? = nil,
                   pagingConfig: AWPagingConfig? = nil,
                   transitionInfo: AWTransitionInfo? = nil,
-                  networkIntegration: AWNetworkIntegrationProtocol? = nil) {
+                  networkIntegration: AWNetworkIntegrationProtocol? = nil,
+                  delegate: AWPhotosViewControllerDelegate? = nil) {
         
         super.init(nibName: nil, bundle: nil)
         self.commonInit(dataSource: dataSource,
                         pagingConfig: pagingConfig,
                         transitionInfo: transitionInfo,
-                        networkIntegration: networkIntegration)
+                        networkIntegration: networkIntegration,
+                        delegate: delegate)
     }
     
     fileprivate func commonInit(dataSource: AWPhotosDataSource? = nil,
                                 pagingConfig: AWPagingConfig? = nil,
                                 transitionInfo: AWTransitionInfo? = nil,
                                 networkIntegration: AWNetworkIntegrationProtocol? = nil,
-                                overlay: AWOverlayView? = AWOverlayView()) {
+                                overlay: AWOverlayView? = AWOverlayView(),
+                                delegate: AWPhotosViewControllerDelegate? = nil) {
         
         if let dataSource = dataSource {
             self.dataSource = dataSource
@@ -381,6 +396,8 @@ public class AWPhotosViewController: UIViewController,
         
         self.networkIntegration = networkIntegration
         self.networkIntegration.delegate = self
+        
+        self.delegate = delegate
         
         self.pageViewController = UIPageViewController(transitionStyle: .scroll,
                                                        navigationOrientation: self.pagingConfig.navigationOrientation,
@@ -682,6 +699,24 @@ public class AWPhotosViewController: UIViewController,
     
     // MARK: - Loading helpers
     fileprivate func loadPhotos(at index: Int) {
+        
+        func cancelLoad(_ photo: AWPhotoProtocol) {
+            self.networkIntegration.cancelLoad(for: photo)
+            photo.aw_loadingState = .loadingFailed
+            
+            let error = AWError.errorDescription(code: "-999", errorMessage: "Cancel Load")
+            photo.aw_error = error
+            
+            DispatchQueue.main.async { [weak self] in
+                self?.notificationCenter.post(name: .photoImageUpdate,
+                                              object: photo,
+                                              userInfo: [
+                                                AWPhotosViewControllerNotification.ErrorKey: error,
+                                                AWPhotosViewControllerNotification.LoadingStateKey: AWPhotoLoadingState.loadingFailed
+                    ])
+            }
+        }
+        
         let numberOfPhotosToLoad = self.dataSource.prefetchBehavior.rawValue
         let startIndex = (((index - (numberOfPhotosToLoad / 2)) >= 0) ? (index - (numberOfPhotosToLoad / 2)) : 0)
         let indexes = startIndex...(startIndex + numberOfPhotosToLoad)
@@ -691,7 +726,49 @@ public class AWPhotosViewController: UIViewController,
             
             if photo.aw_loadingState == .notLoaded || photo.aw_loadingState == .loadingCancelled {
                 photo.aw_loadingState = .loading
-                self.networkIntegration.loadPhoto(photo)
+                if let delegate = self.delegate {
+                    var maybeUpdatePhoto = photo.copyPhoto()
+                    if delegate.photosViewController(self, canLoad: &maybeUpdatePhoto) {
+                        if photo === maybeUpdatePhoto {
+                            self.networkIntegration.loadPhoto(photo)
+                        } else {
+                            self.dataSource.updatePhoto(maybeUpdatePhoto, at: index)
+                            if self.currentPhotoIndex == index { self.overlayView.updateCaptionView(photo: maybeUpdatePhoto) }
+                            self.networkIntegration.loadPhoto(maybeUpdatePhoto)
+                        }
+                    } else {
+                        if photo !== maybeUpdatePhoto {
+                            self.dataSource.updatePhoto(maybeUpdatePhoto, at: index)
+                            if self.currentPhotoIndex == index { self.overlayView.updateCaptionView(photo: maybeUpdatePhoto) }
+                        }
+                        
+                        cancelLoad(photo)
+                    }
+                } else {
+                    self.networkIntegration.loadPhoto(photo)
+                }
+            } else if photo.aw_loadingState == .loading {
+                var maybeUpdatePhoto = photo.copyPhoto()
+                if let delegate = self.delegate {
+                    if delegate.photosViewController(self, canLoad: &maybeUpdatePhoto) {
+                        if photo !== maybeUpdatePhoto {
+                            self.networkIntegration.cancelLoad(for: photo)
+                            
+                            self.dataSource.updatePhoto(maybeUpdatePhoto, at: index)
+                            if self.currentPhotoIndex == index { self.overlayView.updateCaptionView(photo: maybeUpdatePhoto) }
+                            self.networkIntegration.loadPhoto(maybeUpdatePhoto)
+                        }
+                    } else {
+                        if photo !== maybeUpdatePhoto {
+                            self.dataSource.updatePhoto(maybeUpdatePhoto, at: index)
+                            if self.currentPhotoIndex == index { self.overlayView.updateCaptionView(photo: maybeUpdatePhoto) }
+                        }
+                        
+                        cancelLoad(photo)
+                    }
+                } else {
+                    self.networkIntegration.loadPhoto(photo)
+                }
             }
         }
     }
@@ -1227,6 +1304,14 @@ public protocol AWPhotosViewControllerDelegate: AnyObject, NSObjectProtocol {
     func photosViewController(_ photosViewController: AWPhotosViewController,
                               didNavigateTo photo: AWPhotoProtocol,
                               at index: Int)
+    
+    /// Called when networkIntegration try to load Photo in method 'loadPhotos(at index:)'
+    ///
+    /// - Parameters:
+    ///   - photosViewController: The `AWPhotosViewController` that is navigating.
+    ///   - photo: The `AWPhoto` that will try to load.
+    func photosViewController(_ photosViewController: AWPhotosViewController,
+                              canLoad photo: inout AWPhotoProtocol) -> Bool
     
     /// Called when the `AWPhotosViewController` is configuring its `OverlayView` for a new photo. This should be used to update the
     /// the overlay's title or any other overlay-specific properties.

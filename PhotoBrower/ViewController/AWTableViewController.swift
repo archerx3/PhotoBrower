@@ -239,9 +239,8 @@ class AWTableViewController: UITableViewController, AWPhotosViewControllerDelega
         let photosViewController = AWPhotosViewController(dataSource: dataSource,
                                                            pagingConfig: pagingConfig,
                                                            transitionInfo: transitionInfo,
-                                                           overlay: overlayView)
-        
-        photosViewController.delegate = self
+                                                           overlay: overlayView,
+                                                           delegate: self)
         
         if let navi = self.navigationController {
             navi.present(photosViewController, animated: true, completion: nil)
@@ -256,6 +255,20 @@ class AWTableViewController: UITableViewController, AWPhotosViewControllerDelega
                               didNavigateTo photo: AWPhotoProtocol,
                               at index: Int) {
         
+    }
+    
+    func photosViewController(_ photosViewController: AWPhotosViewController,
+                              canLoad photo: inout AWPhotoProtocol) -> Bool {
+        var canLoad = true
+        
+        if let id = photo.identifier, id == "Baby, good night" {
+            photo = AWPhoto(attributedTitle: NSAttributedString(string: "Good Night - New Identifier"),
+                            image: UIImage(named: "Babe"),
+                            identifier: "Baby, good night, New identifier")
+            canLoad = false
+        }
+        
+        return canLoad
     }
     
     func photosViewController(_ photosViewController: AWPhotosViewController,
