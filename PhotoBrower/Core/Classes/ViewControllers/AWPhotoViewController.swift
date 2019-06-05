@@ -148,7 +148,11 @@ public class AWPhotoViewController: UIViewController, AWPageableViewControllerPr
             return
         }
         
-        guard photo === self.photo, let progress = notification.userInfo?[AWPhotosViewControllerNotification.ProgressKey] as? CGFloat else {
+        guard let myPhoto = self.photo else {
+            return
+        }
+        
+        guard photo.identifier == myPhoto.identifier, let progress = notification.userInfo?[AWPhotosViewControllerNotification.ProgressKey] as? CGFloat else {
             return
         }
         
@@ -161,7 +165,11 @@ public class AWPhotoViewController: UIViewController, AWPageableViewControllerPr
             return
         }
         
-        guard photo === self.photo, let userInfo = notification.userInfo else {
+        guard let myPhoto = self.photo else {
+            return
+        }
+        
+        guard photo.identifier == myPhoto.identifier, let userInfo = notification.userInfo else {
             return
         }
         

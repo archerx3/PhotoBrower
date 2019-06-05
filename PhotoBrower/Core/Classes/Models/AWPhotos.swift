@@ -15,7 +15,7 @@ open class AWPhoto: NSObject, AWPhotoProtocol {
                       imageData: Data? = nil,
                       image: UIImage? = nil,
                       url: URL? = nil,
-                      identifier: String? = nil) {
+                      identifier: String) {
         
         self.attributedTitle = attributedTitle
         self.attributedDescription = attributedDescription
@@ -47,7 +47,7 @@ open class AWPhoto: NSObject, AWPhotoProtocol {
     /// The URL of the image. If present, this value will be passed to a `NetworkIntegration` to be downloaded.
     public var url: URL?
     
-    public var identifier: String?
+    public var identifier: String
     
     public func copyPhoto() -> AWPhotoProtocol {
         let copyPhoto = AWPhoto(attributedTitle: self.attributedTitle,
