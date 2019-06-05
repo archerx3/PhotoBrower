@@ -12,7 +12,7 @@ import MobileCoreServices
 
 import FLAnimatedImage
 
-open class AWPhotosViewController: UIViewController,
+public class AWPhotosViewController: UIViewController,
                                    UIPageViewControllerDelegate,
                                    UIPageViewControllerDataSource,
                                    UIGestureRecognizerDelegate,
@@ -23,7 +23,7 @@ open class AWPhotosViewController: UIViewController,
     /// The close bar button item that is initially set in the overlay's toolbar. Any 'target' or 'action' provided to this button will be overwritten.
     /// Overriding this is purely for customizing the look and feel of the button.
     /// Alternatively, you may create your own `UIBarButtonItem`s and directly set them _and_ their actions on the `overlayView` property.
-    open var closeBarButtonItem: UIBarButtonItem {
+    public var closeBarButtonItem: UIBarButtonItem {
         get {
             return UIBarButtonItem(barButtonSystemItem: .stop, target: nil, action: nil)
         }
@@ -32,7 +32,7 @@ open class AWPhotosViewController: UIViewController,
     /// The action bar button item that is initially set in the overlay's toolbar. Any 'target' or 'action' provided to this button will be overwritten.
     /// Overriding this is purely for customizing the look and feel of the button.
     /// Alternatively, you may create your own `UIBarButtonItem`s and directly set them _and_ their actions on the `overlayView` property.
-    open var actionBarButtonItem: UIBarButtonItem {
+    public var actionBarButtonItem: UIBarButtonItem {
         get {
             return UIBarButtonItem(barButtonSystemItem: .action, target: nil, action: nil)
         }
@@ -42,25 +42,25 @@ open class AWPhotosViewController: UIViewController,
     fileprivate var panGestureRecognizer: UIPanGestureRecognizer?
     
     fileprivate var aw_prefersStatusBarHidden: Bool = false
-    open override var prefersStatusBarHidden: Bool {
+    public override var prefersStatusBarHidden: Bool {
         get {
             return super.prefersStatusBarHidden || self.aw_prefersStatusBarHidden
         }
     }
     
-    open override var preferredStatusBarStyle: UIStatusBarStyle {
+    public override var preferredStatusBarStyle: UIStatusBarStyle {
         get {
             return .lightContent
         }
     }
     
-    open weak var delegate: AWPhotosViewControllerDelegate?
+    public weak var delegate: AWPhotosViewControllerDelegate?
     
     /// The underlying `OverlayView` that is used for displaying photo captions, titles, and actions.
     public var overlayView: AWOverlayView!
     
     /// The photos to display in the PhotosViewController.
-    open var dataSource = AWPhotosDataSource() {
+    public var dataSource = AWPhotosDataSource() {
         didSet {
             // this can occur during `commonInit(dataSource:pagingConfig:transitionInfo:networkIntegration:)`
             // if that's the case, this logic will be applied in `viewDidLoad()`
@@ -75,11 +75,11 @@ open class AWPhotosViewController: UIViewController,
     }
     
     /// The configuration object applied to the internal pager at initialization.
-    open fileprivate(set) var pagingConfig = AWPagingConfig()
+    public fileprivate(set) var pagingConfig = AWPagingConfig()
     
     /// The `AWTransitionInfo` passed in at initialization. This object is used to define functionality for the presentation and dismissal
     /// of the `PhotosViewController`.
-    open fileprivate(set) var transitionInfo = AWTransitionInfo()
+    public fileprivate(set) var transitionInfo = AWTransitionInfo()
     
     /// The `NetworkIntegration` passed in at initialization. This object is used to fetch images asynchronously from a cache or URL.
     /// - Initialized by the end of `commonInit(dataSource:pagingConfig:transitionInfo:networkIntegration:)`.
@@ -413,7 +413,7 @@ open class AWPhotosViewController: UIViewController,
         self.pageViewController.scrollView.removeContentOffsetObserver(self)
     }
     
-    open override func didReceiveMemoryWarning() {
+    public override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         
         self.recycledViewControllers.removeLifeycleObserver(self)
@@ -422,7 +422,7 @@ open class AWPhotosViewController: UIViewController,
         self.reduceMemoryForPhotos(at: self.currentPhotoIndex)
     }
     
-    open override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         
         self.view.backgroundColor = .black
@@ -453,7 +453,7 @@ open class AWPhotosViewController: UIViewController,
         }
     }
     
-    open override func viewDidAppear(_ animated: Bool) {
+    public override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         if self.isFirstAppearance {
@@ -469,7 +469,7 @@ open class AWPhotosViewController: UIViewController,
         }
     }
     
-    open override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+    public override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         
         self.isSizeTransitioning = true
@@ -478,7 +478,7 @@ open class AWPhotosViewController: UIViewController,
         }
     }
     
-    open override func viewWillLayoutSubviews() {
+    public override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         self.pageViewController.view.frame = self.view.bounds
         self.overlayView.frame = self.view.bounds
@@ -489,7 +489,7 @@ open class AWPhotosViewController: UIViewController,
         }
     }
     
-    open override func didMove(toParent parent: UIViewController?) {
+    public override func didMove(toParent parent: UIViewController?) {
         super.didMove(toParent: parent)
         
         if parent is UINavigationController {
@@ -518,7 +518,7 @@ open class AWPhotosViewController: UIViewController,
     }
     
     // MARK: - Dismissal
-    open override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
+    public override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
         if self.presentedViewController != nil {
             super.dismiss(animated: flag, completion: completion)
             return
@@ -776,7 +776,7 @@ open class AWPhotosViewController: UIViewController,
     }
     
     // MARK: - KVO
-    open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+    public override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if context == &PhotoViewControllerLifecycleContext {
             self.lifecycleContextDidUpdate(object: object, change: change)
         } else if context == &PhotoViewControllerContentOffsetContext {
@@ -971,7 +971,7 @@ open class AWPhotosViewController: UIViewController,
     /// - Parameters:
     ///   - photo: The `AWPhoto` that was navigated to.
     ///   - index: The `index` in the dataSource of the `AWPhoto` being transitioned to.
-    open func didNavigateTo(photo: AWPhotoProtocol, at index: Int) {
+    public func didNavigateTo(photo: AWPhotoProtocol, at index: Int) {
         self.delegate?.photosViewController(self, didNavigateTo: photo, at: index)
     }
     
@@ -985,7 +985,7 @@ open class AWPhotosViewController: UIViewController,
     ///   - photo: The `AWPhoto` the overlay is being configured for.
     ///   - index: The index of the `AWPhoto` that the overlay is being configured for.
     ///   - totalNumberOfPhotos: The total number of photos in the current `dataSource`.
-    open func willUpdate(overlayView: AWOverlayView, for photo: AWPhotoProtocol, at index: Int, totalNumberOfPhotos: Int) {
+    public func willUpdate(overlayView: AWOverlayView, for photo: AWPhotoProtocol, at index: Int, totalNumberOfPhotos: Int) {
         if let updateBlock = overlayView.topStackContainer.stackableContainerUpdateBlock {
             updateBlock(overlayView.bottomStackContainer, photo, index, self.dataSource.numberOfPhotos)
         }
@@ -1009,7 +1009,7 @@ open class AWPhotosViewController: UIViewController,
     /// - Parameters:
     ///   - overlayView: The `AWOverlayView` whose visibility is changing.
     ///   - visible: A boolean that denotes whether or not the overlay will be visible or invisible.
-    open func overlayView(_ overlayView: AWOverlayView, visibilityWillChange visible: Bool) {
+    public func overlayView(_ overlayView: AWOverlayView, visibilityWillChange visible: Bool) {
         self.delegate?.photosViewController(self,
                                             overlayView: overlayView,
                                             visibilityWillChange: visible)
@@ -1027,7 +1027,7 @@ open class AWPhotosViewController: UIViewController,
     ///   - minimumZoomScale: The minimum zoom scale that is calculated by the library. This value cannot be changed.
     ///   - imageSize: The size of the image that belongs to the `AWPhoto`.
     /// - Returns: A "maximum" zoom scale that >= `minimumZoomScale`.
-    open func maximumZoomScale(for photo: AWPhotoProtocol, minimumZoomScale: CGFloat, imageSize: CGSize) -> CGFloat {
+    public func maximumZoomScale(for photo: AWPhotoProtocol, minimumZoomScale: CGFloat, imageSize: CGSize) -> CGFloat {
         return self.delegate?.photosViewController(self,
                                                    maximumZoomScaleFor: photo,
                                                    minimumZoomScale: minimumZoomScale,
@@ -1043,9 +1043,9 @@ open class AWPhotosViewController: UIViewController,
     /// - Returns:
     ///   true if the action button tap was handled, false if the default action button behavior
     ///   should be invoked.
-    open func handleActionButtonTapped(photo: AWPhotoProtocol) -> Bool {
-        if let _ = self.delegate?.photosViewController(self, handleActionButtonTappedFor: photo) {
-            return true
+    public func handleActionButtonTapped(photo: AWPhotoProtocol) -> Bool {
+        if let result = self.delegate?.photosViewController(self, didHandleActionButtonTappedFor: photo) {
+            return result
         }
         
         return false
@@ -1057,7 +1057,7 @@ open class AWPhotosViewController: UIViewController,
     /// - Parameters:
     ///   - photo: The related `AWPhoto`.
     /// - Note: This is only called for the default action.
-    open func actionCompleted(activityType: UIActivity.ActivityType, for photo: AWPhotoProtocol) {
+    public func actionCompleted(activityType: UIActivity.ActivityType, for photo: AWPhotoProtocol) {
         self.delegate?.photosViewController(self, actionCompletedWith: activityType, for: photo)
     }
     
@@ -1276,7 +1276,7 @@ public protocol AWPhotosViewControllerDelegate: AnyObject, NSObjectProtocol {
     ///   - photosViewController: The `AWPhotosViewController` handling the action.
     ///   - photo: The related `Photo`.
     func photosViewController(_ photosViewController: AWPhotosViewController,
-                              handleActionButtonTappedFor photo: AWPhotoProtocol)
+                              didHandleActionButtonTappedFor photo: AWPhotoProtocol) -> Bool
     
     /// Called when an action button action is completed.
     ///
@@ -1313,7 +1313,7 @@ public protocol AWPhotosViewControllerDelegate: AnyObject, NSObjectProtocol {
 
 // MARK: - Notification definitions
 // Keep Obj-C land happy
-open class AWPhotosViewControllerNotification: NSObject {
+public class AWPhotosViewControllerNotification: NSObject {
     static let ProgressUpdate = Notification.Name.photoLoadingProgressUpdate.rawValue
     static let ImageUpdate = Notification.Name.photoImageUpdate.rawValue
     static let ImageKey = "AWPhotosViewControllerImage"

@@ -11,7 +11,7 @@ import UIKit
 
 import FLAnimatedImage
 
-open class AWPhotoViewController: UIViewController, AWPageableViewControllerProtocol, AWZoomingImageViewDelegate {
+public class AWPhotoViewController: UIViewController, AWPageableViewControllerProtocol, AWZoomingImageViewDelegate {
     
     public weak var delegate: AWPhotoViewControllerDelegate?
     public var pageIndex: Int = 0
@@ -52,11 +52,11 @@ open class AWPhotoViewController: UIViewController, AWPageableViewControllerProt
         self.notificationCenter?.removeObserver(self)
     }
     
-    open override func loadView() {
+    public override func loadView() {
         self.view = AWZoomingImageView()
     }
     
-    open override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         
         self.zoomingImageView.zoomScaleDelegate = self
@@ -66,7 +66,7 @@ open class AWPhotoViewController: UIViewController, AWPageableViewControllerProt
         }
     }
     
-    open override func viewWillLayoutSubviews() {
+    public override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         
         var adjustedSize = self.view.bounds.size

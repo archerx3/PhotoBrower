@@ -279,8 +279,8 @@ class AWTableViewController: UITableViewController, AWPhotosViewControllerDelega
     }
     
     func photosViewController(_ photosViewController: AWPhotosViewController,
-                              handleActionButtonTappedFor photo: AWPhotoProtocol) {
-        
+                              didHandleActionButtonTappedFor photo: AWPhotoProtocol) -> Bool {
+        return false
     }
     
     func photosViewController(_ photosViewController: AWPhotosViewController,
